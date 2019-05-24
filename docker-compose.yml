@@ -1,0 +1,19 @@
+version: '3'
+services:
+  backend:
+    image: applemann/auth-service
+    build: .
+    ports:
+    - "5000:5000"
+    external_links:
+    - postgres
+      #environment:
+      #- en"APP_SETTINGS=project.server.config.ProductionConfig"
+  postgres:
+    image: postgres
+    ports:
+    - "5432:5432"
+    environment:
+    - "POSTGRES_PASSWORD=test123"
+    - "POSTGRES_DB=flask_jwt_auth"
+    - "PGPASSWORD=test123"
