@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: applemann/auth-service
+    image: simpleservice/auth-service:latest
     build: .
     ports:
     - "5000:5000"
@@ -10,7 +10,7 @@ services:
       #environment:
       #- en"APP_SETTINGS=project.server.config.ProductionConfig"
   postgres:
-    image: postgres
+    image: postgres:11
     ports:
     - "5432:5432"
     environment:
