@@ -1,0 +1,7 @@
+
+export TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTg3MjI2MzMsInN1YiI6MSwiZXhwIjoxNTU4NzgwMjMzfQ.aS5JOQlT3MaJbTXSzfqfhTHmwHJEMVb-DEmiw1LF8dk
+
+curl --header "Content-Type: application/json" --request POST --data '{"email":"martin@example.cz","password":"test123"}' http://localhost:5000/auth/register
+curl --header "Content-Type: application/json" --request POST --data '{"email":"martin@example.cz","password":"test123"}' http://localhost:5000/auth/login
+curl --header "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" --request GET http://localhost:5000/auth/status
+
