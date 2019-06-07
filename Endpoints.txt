@@ -1,0 +1,146 @@
+===================================================================================================================
+POST /auth/register    -  create account for new user
+------------------------------------------------------------------------------------------------------------------
+
+Request:
+Content-Type: application/json
+Data: 
+    email - new user email 
+    password - new user password 
+
+------------------------------------------------------------------------------------------------------------------
+
+Response:
+When all is OK:
+{
+  "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk5Mjc3NDUsInN1YiI6MSwiZXhwIjoxNTU5OTg1MzQ1fQ.yOx4vmvsFqfKn2d2Rh4GZraoMKaRC2UNpDNyvOzisgE",
+  "message": "Successfully registered.",
+  "status": "success"
+}
+
+When user already exists:
+{
+  "message": "User already exists. Please Log in.",
+  "status": "fail"
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+Curl example:
+curl --header "Content-Type: application/json" --request POST --data '{"email":"martin@example.cz","password":"test123"}' http://localhost:5000/auth/register
+===================================================================================================================
+
+===================================================================================================================
+POST /auth/login    -  login to user account
+------------------------------------------------------------------------------------------------------------------
+
+Request:
+Content-Type: application/json
+Data: 
+    email - user email 
+    password - user password 
+
+------------------------------------------------------------------------------------------------------------------
+
+Response:
+When all is OK:
+{
+  "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk5MjgxMDEsInN1YiI6MSwiZXhwIjoxNTU5OTg1NzAxfQ.eGWvV3pbtvHnxc5KCJqm3Cl-GsL2NFDKKfpNHGkfAR0",
+  "message": "Successfully logged in.",
+  "status": "success"
+}
+
+
+When is wrong email or password:
+{
+  "message": "User does not exist.",
+  "status": "fail"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Curl example:
+curl --header "Content-Type: application/json" --request POST --data '{"email":"martin@example.cz","password":"test123"}' http://localhost:5000/auth/login
+===================================================================================================================
+
+===================================================================================================================
+GET  /auth/status    -  get user status
+------------------------------------------------------------------------------------------------------------------
+
+Request:
+Content-Type: application/json
+Authorization: Bearer ${TOKEN}
+
+------------------------------------------------------------------------------------------------------------------
+
+Response:
+When all is OK:
+{
+  "data": {
+      "admin": false,
+      "email": "martin@example.cz",
+      "registered_on": "Fri, 07 Jun 2019 17:15:45 GMT",
+      "user_id": 1
+    },
+  "status": "success"
+}
+
+When is wrong auth_token:
+{
+  "message": "Provide a valid auth token.",
+  "status": "fail"
+}
+
+When token is expired:
+{
+  "message": "Signature expired. Please log in again.",
+  "status": "fail"
+}
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Curl example:
+export TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTg3MjI2MzMsInN1YiI6MSwiZXhwIjoxNTU4NzgwMjMzfQ.aS5JOQlT3MaJbTXSzfqfhTHmwHJEMVb-DEmiw1LF8dk
+curl --header "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" --request GET http://localhost:5000/auth/status
+===================================================================================================================
+
+===================================================================================================================
+POST /auth/logout    -  logout logged user
+------------------------------------------------------------------------------------------------------------------
+
+Request:
+Content-Type: application/json
+Authorization: Bearer ${TOKEN}
+
+------------------------------------------------------------------------------------------------------------------
+
+Response:
+When all is OK:
+{
+  "message": "Successfully logged out.",
+  "status": "success"
+}
+
+When is wrong auth_token:
+{
+  "message": "Provide a valid auth token.",
+  "status": "fail"
+}
+
+When user is already logged out:
+{
+  "message": "Token blacklisted. Please log in again.",
+  "status": "fail"
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Curl example:
+export TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTg3MjI2MzMsInN1YiI6MSwiZXhwIjoxNTU4NzgwMjMzfQ.aS5JOQlT3MaJbTXSzfqfhTHmwHJEMVb-DEmiw1LF8dk
+curl --header "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" --request GET http://localhost:5000/auth/logout
+
+===================================================================================================================
