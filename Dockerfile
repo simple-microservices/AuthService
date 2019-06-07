@@ -1,4 +1,4 @@
-FROM applemann/python3:latest
+FROM simpleservices/python3:latest
 
 COPY . /opt/project
 WORKDIR /opt/project
