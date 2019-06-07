@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: applemann/auth-service
+    image: simpleservices/auth-service:0.1
     build: .
     ports:
     - "5000:5000"
